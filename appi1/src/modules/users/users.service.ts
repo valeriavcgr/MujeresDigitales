@@ -5,10 +5,10 @@ import { IUser } from 'src/interfaces';
 export class UsersService {
 
     private users: IUser[]= [
-        {id: 1, name: "valeria", email: "vale@gmail.com"},
-        {id: 2, name: "David", email: "david@gmail.com"},
-        {id: 3, name: "Juan", email: "juan@gmail.com"},
-        {id: 4, name: "Jefferson", email: "jeff@gmail.com"},
+        {id: 1, name: "valeria", email: "vale@gmail.com", password: "1234"},
+        {id: 2, name: "David", email: "david@gmail.com", password: "5678"},
+        {id: 3, name: "Juan", email: "juan@gmail.com", password: "9000"},
+        {id: 4, name: "Jefferson", email: "jeff@gmail.com", password: "0000"},
     ]
 
     findAll(): IUser[]{ // [] significa que me devuelve todo el arreglo

@@ -4,6 +4,7 @@ import { IProduct } from 'src/interfaces';
 @Injectable()
 export class ProductsService {
 
+
     private products: IProduct[]=[
         {id: 1, name: "arroz", price:13500, stock: 10, description:"arroz 3000 gramos "},
         {id: 2, name: "leche", price:5500, stock: 15, description:"leche 1000 mililitos "},
@@ -39,4 +40,6 @@ export class ProductsService {
          if(!stockFind) throw new NotFoundException("Producto no encontrado")
             return stockFind
     }
+
+    
 }

@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {IUser} from 'src/interfaces'
+import { CreateUserDTO } from 'src/dto/create-user.dto';
+import { updateUserDTO } from 'src/dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -17,12 +19,12 @@ export class UsersController {
         }
 
     @Post()//envia un cuerpo de frontend al backend
-    create(@Body()body: Omit<IUser, 'id'>){
+    create(@Body()body: CreateUserDTO){
         return this.userService.create(body)
     }
 
     @Put(':id') // actualiza info
-    update(@Param('id') id: string, @Body() body: Omit<IUser, 'id'>){
+    update(@Param('id') id: string, @Body() body:updateUserDTO){
     return this.userService.update(Number(id), body)
     }
 

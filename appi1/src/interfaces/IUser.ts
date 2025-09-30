@@ -1,1 +1,7 @@
-export type IUser ={id: number, name: string, email:string, password: string}
+export type IUser ={
+    id: number, 
+    name: string,
+    age?: number,
+    email:string,
+    password: string
+}

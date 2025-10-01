@@ -24,7 +24,6 @@ export class ProductsService {
 
     findId(id:number): IProduct{
         const idFind = this.products.find((product)=>product.id === id)
-        if(!idFind) throw new NotFoundException("Producto no encontrado")
             return this.ifDontExists(idFind)
 
     }
@@ -36,12 +35,10 @@ export class ProductsService {
 
     findPrice(price:number): IProduct{
         const priceFind = this.products.find((product)=> product.price === price)
-        if(!priceFind) throw new NotFoundException("Producto no encontrado")
             return this.ifDontExists(priceFind)
     }
     findStock(stock:number): IProduct{
         const stockFind = this.products.find((product)=> product.stock === stock)
-         if(!stockFind) throw new NotFoundException("Producto no encontrado")
             return this.ifDontExists(stockFind)
     }
 
@@ -63,9 +60,12 @@ export class ProductsService {
         Object.assign(productFind, newProduct);
         return productFind;
     }
-    remove(id:number){
-        const userFind= this.products.findIndex((user)=>user.id === id); 
-        this.products.splice(userFind, 1)
+    remove(id:number):String{
+        //valido que el producto a eliminar exista
+        const product = this.findId(id);
+        // si existe entonces lo elimino por el indice 
+        const productFind= this.products.findIndex((product)=>product.id === id);
+        this.products.splice(productFind, 1)
         return (`El producto con id ${id} fue eliminado exitosamente`); 
     }
     

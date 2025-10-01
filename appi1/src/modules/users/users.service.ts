@@ -43,7 +43,7 @@ export class UsersService {
         return userFind; // me devuelve el usuario actualizado
     }
 //  la funcion de encontrar el id = this.findOne(id) no se usa pq le pasamos el id pero el metodo slice busca la posicion del objeto en el array ->  3 != "3" posicion != id
-    remove(id:number){
+    remove(id:number):string{
         const userFind= this.users.findIndex((user)=>user.id === id); //findIndex metodo de js para que busque la posicion del objeto dntro del array
         this.users.splice(userFind, 1)// metodo de arrays que remueve el objeto que le diga  (.id)
         return (`Usuario con id ${id} fue eliminado exitosamente`); // mensaje de confirmacion

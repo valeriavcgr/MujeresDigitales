@@ -1,25 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from 'src/entities/product.entity';
 import { IProduct } from 'src/interfaces';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProductsService {
+constructor(@InjectRepository(Product)
+private productRepo:Repository<Product>
+){}
 
-    // funcion que me valide si no hay productos
-    private ifDontExists(product: IProduct | undefined): IProduct{ 
-        if(!product) throw new NotFoundException("Producto no encontrado")
-        return product
-    }
-
-    private products: IProduct[]=[
-        {id: 1, name: "arroz", price:13500, stock: 10, description:"arroz 3000 gramos "},
-        {id: 2, name: "leche", price:5500, stock: 15, description:"leche 1000 mililitos "},
-        {id: 3, name: "pan", price:500, stock: 20, description:"pan coco "},
-        {id: 4, name: "pollo", price:10000, stock: 5, description:"pollo x libra "},
-        {id:5, name: "azucar", price: 4000, stock:24, description: "azucar morena x libras"}
-    ]
-
-    findAll(): IProduct[] {
-        return this.products
+    findAll() {
+        return this.productRepo.find();
     }
 
     findId(id:number): IProduct{

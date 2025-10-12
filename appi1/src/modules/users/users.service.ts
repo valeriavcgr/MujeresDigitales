@@ -1,18 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/entities/user.entity';
 import { IUser } from 'src/interfaces';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
+    constructor(@InjectRepository(User)
+    private userRepo:Repository<User>
+    ){}
 
-    private users: IUser[]= [
-        {id: 1, name: "valeria", age: 20,email: "vale@gmail.com", password: "123456"},
-        {id: 2, name: "David", age: 20, email: "david@gmail.com", password: "567890"},
-        {id: 3, name: "Juan",  email: "juan@gmail.com", password: "900000"},
-        {id: 4, name: "Jefferson", age: 23, email: "jeff@gmail.com", password: "000000"},
-    ]
-
-    findAll(): IUser[]{ // [] significa que me devuelve todo el arreglo
-        return this.users
+    findAll(){ 
+        return this.userRepo.find(); 
     }
 
     findOne(id:number):IUser{ // corchetos porque me va a devolver un solo objeto

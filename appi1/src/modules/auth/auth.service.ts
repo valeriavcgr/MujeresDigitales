@@ -15,7 +15,7 @@ export class AuthService {
             }
 
             return {
-                user: {id:user.id, name: user.name,email: user.email},
+                user: {id:user.id, name: user.name,age: user.age, email: user.email},
                 accessToken: `fake-token-${user.id}-${Date.now()}`
             }
         }

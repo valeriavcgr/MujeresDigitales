@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import {ConfigModule, ConfigService} from '@nestjs/config';            
+import {ConfigModule, ConfigService} from '@nestjs/config';    
+import { TypeOrmModule } from '@nestjs/typeorm';        
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { SalesModule } from './modules/sales/sales.module';
 
 // impotamos el modulo de configuracion para las variables de entorno
 // importamos el modulo de typeorm para la conexion a la base de datos
@@ -17,18 +18,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     inject: [ConfigService],
     useFactory: (config: ConfigService) => ({
       type: 'mysql',
-      host: config.get('DB_HOST'),
-      port: config.get('DB_PORT'),
-      username: config.get('DB_USERNAME'),
-      password: config.get('DB_PASSWORD'),
-      database: config.get('DB_NAME'),
+      host: config.get<string>('DB_HOST'),
+      port: config.get<number>('DB_PORT'),
+      username: config.get<string>('DB_USERNAME'),
+      password: config.get<string>('DB_PASSWORD'),
+      database: config.get<string>('DB_NAME'),
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
     }),
   }),
   UsersModule,
   ProductsModule, 
-  AuthModule
+  AuthModule, 
+ SalesModule
 ],
   controllers: [AppController],
   providers: [AppService],

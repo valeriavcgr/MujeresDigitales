@@ -8,7 +8,7 @@ import { updateUserDTO } from 'src/dto/update-user.dto';
 export class UsersController {
     constructor(private readonly userService: UsersService){}
 
-    @Get()//lee
+    @Get()
     findAll(){
         return this.userService.findAll();
     }

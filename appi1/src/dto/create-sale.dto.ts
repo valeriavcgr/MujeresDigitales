@@ -1,8 +1,8 @@
 import {IsInt, IsNotEmpty, MaxLength } from "class-validator";
 
-export type IProduct ={id:number, name: string, price:number, stock:number, description:string}
+export type ISale ={saleId:number, name: string, userId:number, date:Date,totalPrice:number }
 
-export class CreateProductDTO{
+export class CreateSaleDTO{
     @IsNotEmpty()
     name: string;
 

@@ -1,15 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'src/entities/product.entity';
+import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProductsService {
-constructor(@InjectRepository(Product)
-private productRepo:Repository<Product>
+constructor(
+    @InjectRepository(Product)
+    private productRepo:Repository<Product>,
+    @InjectRepository(User)
+    private userRepo:Repository<User>
 ){}
 
-    private ifDontExists(product: Product | undefined): Product{ 
+  /*   private ifDontExists(product: Product | undefined): Product{ 
         if(!product) throw new NotFoundException("Producto no encontrado")
         return product
     }
@@ -18,7 +22,7 @@ private productRepo:Repository<Product>
         return this.productRepo.find();
     }
 
-    findId(id:number){
+   findId(id:number){
         const idFind = this.productRepo.findOneBy({id})
             return this.ifDontExists(idFind)
 
@@ -64,5 +68,5 @@ private productRepo:Repository<Product>
         this.products.splice(productFind, 1)
         return (`El producto con id ${id} fue eliminado exitosamente`); 
     }
-    
+    */
 }

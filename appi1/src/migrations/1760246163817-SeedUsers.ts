@@ -14,7 +14,7 @@ export class SeedUsers1760246163817 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            DELETE FROM user WHERE email IN ('vale@gmail.com', 'ana@gmail.com')
+            DELETE FROM user WHERE email IN ('vale@gmail.com', 'ana@gmail.com', 'may@yahoo.com')
             `)
     }
 

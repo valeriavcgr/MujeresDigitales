@@ -1,19 +1,28 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import { InjectRepository } from '@nestjs/typeorm';
 import { loginDTO } from 'src/dto/login.dto';
+import { User } from 'src/entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly usersService: UsersService){}
+    constructor(
+        @InjectRepository(User)
+        private readonly userRepo:Repository<User>
+    ){}
 
-        login(data: loginDTO){
-            const users = this.usersService.findAll();
-            const user = users.find(user=>user.email === data.email && user.password === data.password)
+        async login(data: loginDTO){
+            const user = await this.userRepo.findOne({where:{email:data.email}})
 
             if(!user){
                 throw new UnauthorizedException("Credenciales invalidas")
             }
+            const isPasswordValid = data.password === user.password;
 
+            if(!isPasswordValid){
+                throw new UnauthorizedException("Credenciales invalidas")
+            }
+            
             return {
                 user: {id:user.id, name: user.name,age: user.age, email: user.email},
                 accessToken: `fake-token-${user.id}-${Date.now()}`

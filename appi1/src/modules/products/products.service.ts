@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'src/entities/product.entity';
-import { IProduct } from 'src/interfaces';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -10,18 +9,23 @@ constructor(@InjectRepository(Product)
 private productRepo:Repository<Product>
 ){}
 
+    private ifDontExists(product: Product | undefined): Product{ 
+        if(!product) throw new NotFoundException("Producto no encontrado")
+        return product
+    }
+
     findAll() {
         return this.productRepo.find();
     }
 
-    findId(id:number): IProduct{
-        const idFind = this.products.find((product)=>product.id === id)
+    findId(id:number){
+        const idFind = this.productRepo.findOneBy({id})
             return this.ifDontExists(idFind)
 
     }
 
     findName(name:string): IProduct{
-        const nameFind = this.products.find((product)=>product.name === name)
+        const nameFind = this.productRepo.findOneBy({name: name})
             return this.ifDontExists(nameFind)
     }
 

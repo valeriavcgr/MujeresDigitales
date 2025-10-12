@@ -14,6 +14,9 @@ export class Product {
     @Column({ nullable: false })
     stock: number;
 
+    @Column({ nullable: false, default: true })
+    status: boolean;
+
     @Column({ nullable: false})
     description: string;
 }

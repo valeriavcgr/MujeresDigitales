@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateProductDTO } from 'src/dto/create-product.dto';
+import { UpdateProductDTO } from 'src/dto/update-product.dto';
 import { Product } from 'src/entities/product.entity';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -12,61 +14,49 @@ constructor(
     @InjectRepository(User)
     private userRepo:Repository<User>
 ){}
-
-  /*   private ifDontExists(product: Product | undefined): Product{ 
+    private ifDontExists(product: Product | null): Product{ 
         if(!product) throw new NotFoundException("Producto no encontrado")
         return product
     }
 
     findAll() {
-        return this.productRepo.find();
+        return this.productRepo.find({where:{status: true}});
     }
 
-   findId(id:number){
-        const idFind = this.productRepo.findOneBy({id})
+   async findId(id:number){
+        const idFind = await this.productRepo.findOneBy({id})
             return this.ifDontExists(idFind)
-
     }
 
-    findName(name:string): IProduct{
-        const nameFind = this.productRepo.findOneBy({name: name})
+    async findName(name:string){
+        const nameFind = await this.productRepo.findOneBy({name})
             return this.ifDontExists(nameFind)
     }
 
-    findPrice(price:number): IProduct{
-        const priceFind = this.products.find((product)=> product.price === price)
+    async findPrice(price:number){
+        const priceFind = await this.productRepo.findOneBy({price})
             return this.ifDontExists(priceFind)
     }
-    findStock(stock:number): IProduct{
-        const stockFind = this.products.find((product)=> product.stock === stock)
+
+    async findStock(stock:number){
+        const stockFind = await this.productRepo.findOneBy({stock})
             return this.ifDontExists(stockFind)
     }
 
-    create(product: Omit<IProduct, 'id'>): IProduct{
-        const newIdP = 
-        this.products.length > 0 
-        ? this.products[this.products.length-1].id +1 
-        :1;
-
-        const newProduct: IProduct = {
-            id: newIdP, ...product
-        };
-        this.products.push(newProduct);
-        return newProduct;
+    create(newProduct: CreateProductDTO){
+        const productCreated= this.productRepo.create(newProduct)
+        return this.productRepo.save(productCreated)
     }
 
-    update(id:number,newProduct: Omit<IProduct, 'id'>):IProduct{
-        const productFind = this.findId(id);
-        Object.assign(productFind, newProduct);
-        return productFind;
+    async update(id:number, updateProduct: UpdateProductDTO){
+        await this.productRepo.update(id, updateProduct)
+        return this.findId(id)
     }
-    remove(id:number):String{
-        //valido que el producto a eliminar exista
-        const product = this.findId(id);
-        // si existe entonces lo elimino por el indice 
-        const productFind= this.products.findIndex((product)=>product.id === id);
-        this.products.splice(productFind, 1)
-        return (`El producto con id ${id} fue eliminado exitosamente`); 
+
+    async remove(id:number){
+        const productFind = this.ifDontExists(await this.productRepo.findOneBy({id}))
+        productFind.status = false 
+        await this.productRepo.save(productFind)
+        return (`El producto con id ${id} fue desactivado`); 
     }
-    */
 }

@@ -33,8 +33,8 @@ export class UsersService {
     }
 
     async remove(id:number){
-        const result = await this.userRepo.delete(id)
-        if(result.affected === 0) throw new NotFoundException('Usuario no encontrado')
+        const deleteUser = await this.userRepo.delete(id)
+        if(deleteUser.affected === 0) throw new NotFoundException('Usuario no encontrado')
         return {message: `Usuario con id ${id} se ha eliminado correctamente`};
     }
 }

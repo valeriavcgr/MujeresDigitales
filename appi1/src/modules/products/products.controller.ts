@@ -7,12 +7,12 @@ import {UpdateProductDTO} from 'src/dto/update-product.dto';
 export class ProductsController {
     constructor(private readonly productsService: ProductsService){}
 
- /*   @Get()
+    @Get()
     findAll(){
         return this.productsService.findAll();
     }
 
-    @Get('id/:id')
+    @Get(':id')
     findOne(@Param('id')id:string){
         return this.productsService.findId(Number(id))
     }
@@ -28,7 +28,7 @@ export class ProductsController {
     }
 
     @Get('stock/:stock')
-    findStock(@Param('stock')stock:number){
+    findStock(@Param('stock')stock:string){
         return this.productsService.findStock(Number(stock))
     }
 
@@ -45,5 +45,5 @@ export class ProductsController {
     remove(@Param('id')id:string){
         return this.productsService.remove(Number(id))
     }
-        */
+
 }

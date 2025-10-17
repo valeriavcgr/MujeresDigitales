@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateProductDTO } from 'src/dto/create-product.dto';
 import { UpdateProductDTO } from 'src/dto/update-product.dto';
+import { Category } from 'src/entities/category.entity';
 import { Product } from 'src/entities/product.entity';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -10,18 +11,18 @@ import { Repository } from 'typeorm';
  * Servicio encargado de manejar la logica de negocio relacionada con los productos
  * Este servicio interactua directamente con la base de datos mediante los repositorios de typeorm
  * Realiza operaciones CRUD sobre los productos
- */
-@Injectable()
-export class ProductsService {
-/**
 * Constructor del servicio de productos
 * Inyecta los repositorios de product y user para permitir el acceso a sus tablas en la base de datos
 * @param productRepo: Repositorio que permite realizar operaciones con la entidad Product
 * @param userRepo:Repositorio de la entidad user, util si se requiere asociar usuarios a productos
 */
+@Injectable()
+export class ProductsService {
 constructor(
     @InjectRepository(Product)
     private productRepo:Repository<Product>,
+    @InjectRepository(Category)
+    private categoryRepo:Repository<Category>,
     @InjectRepository(User)
     private userRepo:Repository<User>
 ){}
@@ -32,7 +33,7 @@ constructor(
 * @returns: El producto encontrado o lanza un error si no se encuentra
 */
     private ifDontExists(product: Product | null): Product{ 
-        if(!product) throw new NotFoundException("Producto no encontrado")
+        if(!product) throw new NotFoundException("Ese producto no existe")
         return product
     }
 /**

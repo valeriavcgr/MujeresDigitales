@@ -1,19 +1,18 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { loginDTO } from 'src/dto/login.dto';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
+import { JwtAuthGuard } from './jwt.guard';
 /**
  * AuthController:
  * Controlador responsable de manejar las rutas relacionadas con la autenticacion de usuarios
  * Define los endpoints para el registro y el inicio de sesion
- */
-@Controller('auth')
-export class AuthController {
-/**
 * Constructor del controlador de autenticacion
 * Inyecta el servicio AuthService, que contiene la logica de registro y autenticacion
 * @param authService: Servicio que gestiona las operaciones de autenticacion
 */
+@Controller('auth')
+export class AuthController {
     constructor(private readonly authService: AuthService){}
 /**
 * Endpoint: POST /auth/register
@@ -34,5 +33,17 @@ export class AuthController {
     @Post('login')
     login(@Body() data:loginDTO){
         return this.authService.login(data);
+    }
+/*
+* Endpoint: GET /auth/profile
+*@UseGuards:Le indica a la ruta que debe usar mi Jwt
+* Decodifica la información del token
+* @Request:Inyecta el objeto solicitado y lo inyecta en la variable info
+* @returns: L informacion del usuario logiado
+*/
+@UseGuards(JwtAuthGuard)
+ @Get('profile')
+    getprofile(@Request()info){
+        return info.user
     }
 }

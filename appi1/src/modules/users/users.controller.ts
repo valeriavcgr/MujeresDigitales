@@ -1,18 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { updateUserDTO } from 'src/dto/update-user.dto';
+import { JwtAuthGuard } from '../auth/jwt.guard';
 /**
  * UsersController:
  * Encargado de manejar las rutas y peticiones http relacionadas con la gestion de usuarios dentro del sistema
  * Actua como intermediario entre el cliente, peticiones HTTP, y el servicio UsersService
- */
-@Controller('users')
-export class UsersController {
-/**
 * Constructor del controlador de usuarios
 * @param userService: Servicio de usuarios que contiene los metodos para manipular los datos en la base de datos
 */
+@Controller('users')
+@UseGuards(JwtAuthGuard)
+export class UsersController {
     constructor(private readonly userService: UsersService){}
 /**
 * Metodo findAll
@@ -32,8 +32,8 @@ export class UsersController {
 * @returns: Datos del usuario encontrado o una excepción si no existe
 */
     @Get(':id')
-        findOne(@Param('id')id:string){
-            return this.userService.findOne(Number(id))
+        findOne(@Param('id', ParseIntPipe)id:number){
+            return this.userService.findOne(id)
         }
 /**
 * Metodo create
@@ -55,8 +55,8 @@ export class UsersController {
 * @returns: El usuario actualizado
 */
     @Put(':id')
-    update(@Param('id') id: string, @Body() body:updateUserDTO){
-    return this.userService.update(Number(id), body)
+    update(@Param('id', ParseIntPipe) id: number, @Body() body:updateUserDTO){
+    return this.userService.update(id, body)
     }
 
 /**
@@ -67,7 +67,7 @@ export class UsersController {
 * @returns: Mensaje de confirmacion de eliminacion
 */
     @Delete(':id')
-    remove(@Param('id')id:string){
-        return this.userService.remove(Number(id))
+    remove(@Param('id', ParseIntPipe)id:number){
+        return this.userService.remove(id)
     }
 }

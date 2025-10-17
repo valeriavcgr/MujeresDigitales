@@ -7,40 +7,26 @@ import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { SalesModule } from './modules/sales/sales.module';
+import { CategoryModule } from './modules/category/category.module';
+
 /**
  * AppModule:
  * Modulo principa de la aplicacion nest
  * Se encarga de integrar todos los modulos y configurar las dependencias globales
  * Incluye la configuración de la base de datos y la carga de variables de entorno
- */
-@Module({
-/**
 * imports:
 * Se importan todos los modulos necesarios para el funcionamiento
-   * ConfigModule: para manejar variables de entorno
-   * TypeOrmModule: para la conexion con la base de datos mysql
-   * Modulos personalizados: UsersModule, ProductsModule, AuthModule y SalesModule
-   */
-  imports: [
-/**
+* ConfigModule: para manejar variables de entorno
+* TypeOrmModule: para la conexion con la base de datos mysql
+* Modulos personalizados: UsersModule, ProductsModule, AuthModule y SalesModule
 * ConfigModule:
 * Permite acceder a las variables definidas en el archivo .env
 * La opcion isGlobal: true lo hace accesible desde cualquier modulo
-*/
-  ConfigModule.forRoot({isGlobal: true}),
-/**
 * TypeOrmModule.forRootAsync:
 * Configura la conexion con la base de datos de forma asincrona
 * usando las variables del archivo .env a través del ConfigService
 * type:
 * Define el tipo de base de datos (mysql)
-*/
-  TypeOrmModule.forRootAsync({
-    imports: [ConfigModule],
-    inject: [ConfigService],
-    useFactory: (config: ConfigService) => ({
-      type: 'mysql',
-/**
 * host:
 * Direccion del servidor de la base de datos, que se obtiene desde el .env
 * port:
@@ -51,24 +37,11 @@ import { SalesModule } from './modules/sales/sales.module';
 * Contraseña del usuario de la base de datos
 * database:
 * Nombre de la base de datos que se va a utilizar
-*/
-      host: config.get<string>('DB_HOST'),
-      port: config.get<number>('DB_PORT'),
-      username: config.get<string>('DB_USERNAME'),
-      password: config.get<string>('DB_PASSWORD'),
-      database: config.get<string>('DB_NAME'),
-/**
 * autoLoadEntities:
 * Permite que typeorm cargue automaticamente todas las entidades registradas en los modulos
 * synchronize:
 * Si esta en true, sincroniza automáticamente las entidades con la base de datos
 * Esta en false para evitar modificaciones automaticas en produccion
-*/
-      autoLoadEntities: true,
-      synchronize: false,
-    }),
-  }),
-/**
 * UsersModule:
 * Modulo encargado de la gestion de usuarios
 * ProductsModule:
@@ -77,21 +50,35 @@ import { SalesModule } from './modules/sales/sales.module';
 * Modulo que maneja la autenticación y el inicio de sesion 
 * SalesModule:
 * Modulo que gestiona las ventas y sus operaciones
+* controllers:
+* Controladores principales del modulo
+* providers:
+* Servicios principales del modulo
 */
+@Module({
+  imports: [
+  ConfigModule.forRoot({isGlobal: true}),
+  TypeOrmModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: (config: ConfigService) => ({
+      type: 'mysql',
+      host: config.get<string>('DB_HOST'),
+      port: config.get<number>('DB_PORT'),
+      username: config.get<string>('DB_USERNAME'),
+      password: config.get<string>('DB_PASSWORD'),
+      database: config.get<string>('DB_NAME'),
+      autoLoadEntities: true,
+      synchronize: false,
+    }),
+  }),
   UsersModule,
   ProductsModule, 
   AuthModule, 
-  SalesModule
+  SalesModule, 
+  CategoryModule
 ],
-/*
-* controllers:
-* Controladores principales del modulo
-*/
-  controllers: [AppController],
-/*
-* providers:
-* Servicios principales del modulo
-*/ 
+  controllers: [AppController], 
   providers: [AppService],
 })
 export class AppModule {}

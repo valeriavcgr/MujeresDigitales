@@ -8,6 +8,8 @@ import { DataSource } from 'typeorm';
 import { User } from './src/entities/user.entity';
 import { Product } from './src/entities/product.entity';
 import { Sale } from './src/entities/sale.entity';
+import { Category } from './src/entities/category.entity';
+import { SaleDetail } from './src/entities/saleDetail.entity';
 /**
 * Carga las variables de entorno definidas en el archivo .env
  * Asi son utilizarlas dentro de esta configuracion
@@ -17,9 +19,6 @@ dotenv.config()
  * Exporta una nueva instancia de DataSource
  * Instancia que define la conexion a la base de datos
  * Ademas de los parametros que typeorm usara para generar migraciones y mapear entidades
- */
-export default new DataSource({
-/**
 * type:
 * Indica el tipo de base de datos a utilizar
 * host:
@@ -45,12 +44,13 @@ export default new DataSource({
 * Las migraciones son scripts que permiten crear, modificar o eliminar tablas
 * de forma controlada dentro de la base de datos
 */
+export default new DataSource({
     type: 'mysql',
     host: process.env.DB_HOST,
     port:Number(process.env.DB_PORT),
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities:[User, Product, Sale],
+    entities:[User, Product, Sale, Category, SaleDetail],
     migrations: ['./src/migrations/*.ts'],
 });

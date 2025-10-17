@@ -19,9 +19,9 @@ export class SeedProducts1760247652866 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
             INSERT INTO product (name,price,stock,status, description) VALUES
-            ('queso pera',20000,5,1,'queso pera por libra'),
-            ('jamon serrano',2500,10,1,'jamon serrano importado por libra'),
-            ('crema de leche',3000,15,1,'creama de leche por unidad')
+            ('samsung galaxy a26 256gb 5g',2000000,5,1,'celu samsung'),
+            ('celular iphone 16 plus 128gb 5g',1500000,10,1,'celu iphone'),
+            ('xiaomi redmi note 14 256gb 5g',3000000,15,1,'celu xiaomi')
             `)
     }
 /**

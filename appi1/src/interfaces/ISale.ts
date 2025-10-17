@@ -1,8 +1,7 @@
 export type ISale ={
-    saleId:number,
+    id:number,
     userId:number,
     date:Date
-//  products:{nameProduct:string, price:number}[],
     totalPrice:number 
 }
 

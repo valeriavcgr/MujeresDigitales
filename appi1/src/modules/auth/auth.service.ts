@@ -9,15 +9,13 @@ import { JwtService } from '@nestjs/jwt';
 /**
  * AuthService:
  * Servicio encargado de gestionar la autenticación de usuarios
- * Contiene los metodos para registrar nuevos usuarios y para iniciar sesion, mediante la verificación de credenciales y generación de tokens JWT.
- */
-@Injectable()
-export class AuthService {
-/**
+ * Contiene los metodos para registrar nuevos usuarios y para iniciar sesion, mediante la verificación de credenciales y generación de tokens
 * Constructor del servicio de autenticacion
 @param userRepo: Repositorio de la entidad user para interactuar con la base de datos
 * @param jwtService: Servicio de NestJS que permite generar y firmar tokens
 */
+@Injectable()
+export class AuthService {
     constructor(
         @InjectRepository(User)
         private readonly userRepo:Repository<User>,
@@ -44,7 +42,7 @@ export class AuthService {
 * Busca el usuario por su correo electrónico
 * Verifica si el usuario existe
 * Compara la contraseña ingresada con la almacenada encriptada
-* Si las credenciales son válidas, genera un token JWT con la información del usuario
+* Si las credenciales son válidas, genera un JWT (token)con la información del usuario
 * @param data: Objeto con las credenciales del usuario.
 * @returns: Un objeto con el token de acceso generado
 * @throws: UnauthorizedException si las credenciales son incorrectas

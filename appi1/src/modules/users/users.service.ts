@@ -9,21 +9,18 @@ import { Repository } from 'typeorm';
  * Servicio responsable de manejar la logica de negocio relacionada con los usuarios
  * Interactua directamente con la base de datos mediante el repositorio de typeorm
  * Permite realizar operaciones CRUD sobre los usuarios
- */
-@Injectable()
-export class UsersService {
-/**
 * Constructor del servicio de usuarios
 * Inyecta el repositorio de user para permitir el acceso a la tabla correspondiente en la base de datos
 * @param userRepo: Repositorio que permite realizar operaciones con la entidad user
 */
+@Injectable()
+export class UsersService {
     constructor(@InjectRepository(User)
     private userRepo:Repository<User>
     ){}
 /**
-* Constructor del servicio de usuarios
-* Inyecta el repositorio de User para permitir el acceso a la tabla correspondiente en la base de datos
-* @param userRepo: Repositorio que permite realizar operaciones con la entidad user
+* Metodo findAll
+* @returns:Todos los usuarios que estan en la base de datos
 */
     findAll(){ 
         return this.userRepo.find(); 

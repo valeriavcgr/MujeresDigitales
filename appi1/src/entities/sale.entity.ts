@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./user.entity";
+import { SaleDetail } from "./saleDetail.entity";
 /**
  * Entidad Sale
  * Representa una venta registrada en el sistema
@@ -11,13 +13,7 @@ export class Sale {
 */
     @PrimaryGeneratedColumn()
     saleId: number;
-/**
-* userId: Identificador del usuario que realizó la venta
-* Permite relacionar la venta con un usuario
-* Decorador: @Column({ nullable: false }), para que el campo no sea nulo
-*/
-    @Column({ nullable: false })
-    userId: number;
+
 /**
 * date: Fecha en la que se realizó la venta
 * Almacena el momento exacto de la transacción
@@ -33,4 +29,9 @@ export class Sale {
     @Column({ nullable: false })
     totalPrice: number;
 
+    @ManyToOne(() => User, user => user.salesId, { onDelete: 'CASCADE' })
+    userId: User;
+
+    @OneToMany(() => SaleDetail, detail => detail.salesFK)
+    detailsFK: SaleDetail[];
 }

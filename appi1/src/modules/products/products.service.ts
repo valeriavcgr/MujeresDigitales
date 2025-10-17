@@ -22,9 +22,7 @@ constructor(
     @InjectRepository(Product)
     private productRepo:Repository<Product>,
     @InjectRepository(Category)
-    private categoryRepo:Repository<Category>,
-    @InjectRepository(User)
-    private userRepo:Repository<User>
+    private categoryRepo:Repository<Category>
 ){}
 /**
 * Metodo privado: ifDontExists

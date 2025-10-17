@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Category } from "./category.entity";
+import { SaleDetail } from "./saleDetail.entity";
 /**
  * Entidad Product:
  * Representa un producto dentro de la base de datos
@@ -47,4 +49,10 @@ export class Product {
 */
     @Column({ nullable: false})
     description: string;
+
+    @ManyToOne(() => Category, category => category.productId, { onDelete: 'SET NULL' })
+    category: Category;
+
+    @OneToMany(() => SaleDetail, detail => detail.productFK)
+    details: SaleDetail[];
 }

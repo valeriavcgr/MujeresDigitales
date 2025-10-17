@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt'
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { updateUserDTO } from 'src/dto/update-user.dto';
+import { Sale } from 'src/entities/sale.entity';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 /**
@@ -17,7 +18,9 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UsersService {
     constructor(@InjectRepository(User)
-    private userRepo:Repository<User>
+    private userRepo:Repository<User>,
+    @InjectRepository(Sale)
+    private saleRepo:Repository<Sale>
     ){}
 /**
 * Metodo findAll

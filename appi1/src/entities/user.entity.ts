@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Sale } from "./sale.entity";
 /**
  * Entidad User:
  * Representa un usuario dentro del sistema
@@ -47,4 +48,7 @@ export class User{
 
     @Column({default: RolesE.USER})
     role: RolesE
+
+    @OneToMany(() => Sale, sale => sale.userId)
+    salesId: Sale[];
 }

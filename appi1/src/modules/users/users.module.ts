@@ -3,6 +3,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
+import { Sale } from 'src/entities/sale.entity';
 /**
  * UsersModule
  * Modulo encargado de agrupar todos los componentes relacionados con la gestion de usuarios
@@ -19,7 +20,10 @@ import { User } from 'src/entities/user.entity';
 * Registra el servicio de usuarios, el cual contiene toda la logica de negocio para la gestión de usuarios 
 */
 @Module({
-  imports:[TypeOrmModule.forFeature([User])],
+  imports:[TypeOrmModule.forFeature([
+    User,
+    Sale
+  ])],
   exports: [TypeOrmModule.forFeature([User])], 
   controllers: [UsersController],
   providers: [UsersService]

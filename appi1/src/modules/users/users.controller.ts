@@ -3,6 +3,9 @@ import { UsersService } from './users.service';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { updateUserDTO } from 'src/dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/jwt.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
+import { RolesE } from 'src/entities/user.entity';
 /**
  * UsersController:
  * Encargado de manejar las rutas y peticiones http relacionadas con la gestion de usuarios dentro del sistema
@@ -11,7 +14,7 @@ import { JwtAuthGuard } from '../auth/jwt.guard';
 * @param userService: Servicio de usuarios que contiene los metodos para manipular los datos en la base de datos
 */
 @Controller('users')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
     constructor(private readonly userService: UsersService){}
 /**
@@ -21,6 +24,7 @@ export class UsersController {
 * @returns: Lista completa de usuarios
 */
     @Get()
+    @Roles(RolesE.ADMIN)
     findAll(){
         return this.userService.findAll();
     }
@@ -32,6 +36,7 @@ export class UsersController {
 * @returns: Datos del usuario encontrado o una excepción si no existe
 */
     @Get(':id')
+    @Roles(RolesE.ADMIN, RolesE.SELLER)
         findOne(@Param('id', ParseIntPipe)id:number){
             return this.userService.findOne(id)
         }
@@ -43,6 +48,7 @@ export class UsersController {
 * @returns: El usuario recien creado
 */
     @Post()
+    @Roles(RolesE.ADMIN)
     create(@Body()body: CreateUserDTO){
         return this.userService.create(body)
     }
@@ -55,6 +61,7 @@ export class UsersController {
 * @returns: El usuario actualizado
 */
     @Put(':id')
+    @Roles(RolesE.ADMIN)
     update(@Param('id', ParseIntPipe) id: number, @Body() body:updateUserDTO){
     return this.userService.update(id, body)
     }
@@ -67,6 +74,7 @@ export class UsersController {
 * @returns: Mensaje de confirmacion de eliminacion
 */
     @Delete(':id')
+    @Roles(RolesE.ADMIN)
     remove(@Param('id', ParseIntPipe)id:number){
         return this.userService.remove(id)
     }

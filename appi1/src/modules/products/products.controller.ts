@@ -4,6 +4,9 @@ import { CreateProductDTO } from 'src/dto/create-product.dto';
 import {UpdateProductDTO} from 'src/dto/update-product.dto';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { ParseLowerPipe } from 'src/common/pipes/parce-lower.pipe';
+import { Roles } from '../auth/roles.decorator';
+import { RolesE } from 'src/entities/user.entity';
+import { RolesGuard } from '../auth/roles.guard';
 /**
  * ProductsController:
  * Controlador encargado de gestionar todas las rutas relacionadas con los productos
@@ -24,13 +27,23 @@ export class ProductsController {
     findAll(){
         return this.productsService.findAll();
     }
+
+    @Get()
+    @UseGuards(JwtAuthGuard,RolesGuard)
+    @Roles(RolesE.ADMIN)
+    find(){
+        return this.productsService.find();
+    }
 /**
 * Endpoint: GET /products/:id
 * Busca un producto especifico por su id
 * @param id: Identificador unico del producto
 * @returns: El producto correspondiente al id ingresado
 */
+
     @Get(':id')
+    @UseGuards(JwtAuthGuard,RolesGuard)
+    @Roles(RolesE.ADMIN, RolesE.SELLER)
     findOne(@Param('id', ParseIntPipe)id:number){
         return this.productsService.findId(id)
     }
@@ -70,8 +83,10 @@ export class ProductsController {
 * @param body: Objeto con los datos del nuevo producto
 * @returns: El producto recien creado y un mensaje de confirmacion
 */
-    @UseGuards(JwtAuthGuard)
+
     @Post()
+    @UseGuards(JwtAuthGuard,RolesGuard)
+    @Roles(RolesE.ADMIN, RolesE.SELLER)
     create(@Body()body: CreateProductDTO){
         return this.productsService.create(body)
     }
@@ -82,8 +97,10 @@ export class ProductsController {
 * @param body: Datos actualizados del producto
 * @returns: Mensaje de exito y los datos actualizados del producto
 */
-    @UseGuards(JwtAuthGuard)
+
     @Put(':id')
+    @UseGuards(JwtAuthGuard,RolesGuard)
+    @Roles(RolesE.ADMIN)
     update(@Param('id', ParseIntPipe) id: number, @Body() body:UpdateProductDTO){
     return this.productsService.update(id, body)
     }
@@ -93,8 +110,10 @@ export class ProductsController {
 * @param id: Identificador único del producto a eliminar
 * @returns: Mensaje de confirmacion de eliminacion
 */
-    @UseGuards(JwtAuthGuard)
+
     @Delete(':id')
+    @UseGuards(JwtAuthGuard,RolesGuard)
+    @Roles(RolesE.ADMIN)
     remove(@Param('id', ParseIntPipe)id:number){
         return this.productsService.remove(id)
     }

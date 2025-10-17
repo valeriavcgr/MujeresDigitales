@@ -2,7 +2,6 @@ import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
 import { AuthService } from './auth.service';
 import { loginDTO } from 'src/dto/login.dto';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
-import { JwtAuthGuard } from './jwt.guard';
 /**
  * AuthController:
  * Controlador responsable de manejar las rutas relacionadas con la autenticacion de usuarios
@@ -41,7 +40,6 @@ export class AuthController {
 * @Request:Inyecta el objeto solicitado y lo inyecta en la variable info
 * @returns: L informacion del usuario logiado
 */
-@UseGuards(JwtAuthGuard)
  @Get('profile')
     getprofile(@Request()info){
         return info.user

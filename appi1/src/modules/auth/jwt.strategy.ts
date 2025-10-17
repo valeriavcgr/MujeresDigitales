@@ -29,7 +29,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt'){
 * @returns: Objeto con los datos del usuario autenticado
 */
     async validate(body:any){
-        return {userId: body.ing, email: body.email}
+        return {userId: body.ing, email: body.email, role: body.role}
 
     }
 

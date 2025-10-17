@@ -5,6 +5,13 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
  * Identificadores unicos: nombre, correo electrónico
  * edad opcional
  */
+
+export enum RolesE {
+    ADMIN = 'admi',
+    USER = 'user',
+    SELLER = 'seller'
+}
+
 @Entity()
 export class User{
 /**
@@ -37,4 +44,7 @@ export class User{
 */
     @Column()
     password: string
+
+    @Column({default: RolesE.USER})
+    role: RolesE
 }

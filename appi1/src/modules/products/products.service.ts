@@ -44,6 +44,10 @@ constructor(
     findAll() {
         return this.productRepo.find({where:{status: true}});
     }
+
+    find(){
+        return this.productRepo.find()
+    }
 /**
 * Metodo findId
 * Busca un producto especifico por su id 

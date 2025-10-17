@@ -58,7 +58,7 @@ export class AuthService {
             throw new UnauthorizedException("Credenciales invalidas")
         }
 
-        const bodyToken = {ing:user.id, name: user.name, email: user.email};
+        const bodyToken = {ing:user.id, name: user.name, email: user.email, role:user.role};
         const token = await this.jwtService.signAsync(bodyToken);
         return {
             accessToken: token

@@ -15,7 +15,7 @@ import { RolesGuard } from '../auth/roles.guard';
 * Inyecta el servicio ProductsService, que contiene la logica de negocio de los productos
 * @param productsService: Servicio de productos encargado de la gestion de datos
 */
-@Controller('/api/products')
+@Controller('products')
 export class ProductsController {
     constructor(private readonly productsService: ProductsService){}
 /*

@@ -5,7 +5,7 @@ import { RolesGuard } from '../auth/roles.guard';
 import { RolesE } from 'src/entities/user.entity';
 import { Roles } from '../auth/roles.decorator';
 
-@Controller('/api/sales')
+@Controller('sales')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class SalesController {
     constructor(private readonly salesService: SalesService){}

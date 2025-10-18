@@ -10,7 +10,7 @@ import { CreateUserDTO } from 'src/dto/create-user.dto';
 * Inyecta el servicio AuthService, que contiene la logica de registro y autenticacion
 * @param authService: Servicio que gestiona las operaciones de autenticacion
 */
-@Controller('/api/auth')
+@Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService){}
 /**

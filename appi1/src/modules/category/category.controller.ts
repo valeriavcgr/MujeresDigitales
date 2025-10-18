@@ -7,7 +7,7 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { RolesE } from 'src/entities/user.entity';
 
-@Controller('category')
+@Controller('/api/category')
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService){}
 

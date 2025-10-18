@@ -13,7 +13,7 @@ import { RolesE } from 'src/entities/user.entity';
 * Constructor del controlador de usuarios
 * @param userService: Servicio de usuarios que contiene los metodos para manipular los datos en la base de datos
 */
-@Controller('users')
+@Controller('/api/users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
     constructor(private readonly userService: UsersService){}

@@ -47,7 +47,7 @@ export class User{
     password: string
 
     @Column({default: RolesE.USER})
-    role: RolesE
+    role?: RolesE
 
     @OneToMany(() => Sale, sale => sale.userId)
     salesId: Sale[];

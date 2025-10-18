@@ -1,4 +1,5 @@
 import { IsEmail, IsInt, IsNotEmpty, IsOptional,Min, Max, Length } from "class-validator";
+import { RolesE } from "src/entities/user.entity";
 
 export class CreateUserDTO{
     @IsNotEmpty() 
@@ -17,4 +18,7 @@ export class CreateUserDTO{
     @IsNotEmpty()
     @Length(6,10,{message: "La contraseña debe tener entre 6 y 10 caracteres"})
     password: string
+
+    @IsNotEmpty()
+    role?: RolesE
 }

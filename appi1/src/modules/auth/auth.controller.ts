@@ -20,7 +20,7 @@ export class AuthController {
 * @returns Mensaje de confirmación y los datos básicos del usuario creado
 */
     @Post('register')
-    regisyer(@Body()data: CreateUserDTO){
+    register(@Body()data: CreateUserDTO){
         return this.authService.register(data);
     }
 /**
